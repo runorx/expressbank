@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://express-five-alpha.vercel.app/api/account/"
+    ? "https://express-dfcc.onrender.com/api/account/"
     : "http://localhost:5000/api/account/";
 
 //Get Account
