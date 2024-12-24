@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "/api/admins/"
+    ? "https://express-five-alpha.vercel.app/api/admins/"
     : "http://localhost:5000/api/admins/";
 
 //Login Admin
