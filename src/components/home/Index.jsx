@@ -39,23 +39,17 @@ export const Index = () => {
   );
 };
 
+// import React from "react";
+// import { Navbar } from "./navbar";
+// import { Hero } from "./hero";
 
-
-//  import Hero from "./components/home/Hero";
-// import Features from "./components/home/Motivation";
-// import Footer from "./components/layout/Footer";
-//  import Navbar from "./components/layout/Navbar";
-//  import Testimonials from "./components/home/Reviews";
-
-// export default function Index () {
+// export default function Home() {
 //   return (
-//     <main className="flex min-h-screen flex-col items-center justify-between bg-white">
+//     <main className="min-h-screen">
 //       <Navbar />
 //       <Hero />
-//       <Features />
-//       <Testimonials />
-//       <Footer />
+//       {/* Other sections */}
 //     </main>
-//   )
+//   );
 // }
 

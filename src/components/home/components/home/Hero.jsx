@@ -43,111 +43,150 @@
 //   );
 // }
 
+// import React from "react";
+
+// export default function Hero() {
+//   const containerStyle = {
+//     position: "relative",
+//     backgroundColor: "white",
+//     overflow: "hidden",
+//     marginTop: "11%"
+//   };
+
+//   const contentStyle = {
+//     maxWidth: "1024px",
+//     margin: "0 auto",
+//     position: "relative",
+//     zIndex: 10,
+//     paddingBottom: "2rem",
+//   };
+
+//   const headingStyle = {
+//     fontSize: "3rem",
+//     fontWeight: "800",
+//     color: "#1f2937",
+//     lineHeight: "1.2",
+//   };
+
+//   const highlightStyle = {
+//     color: "#003366",
+//   };
+
+//   const paragraphStyle = {
+//     marginTop: "1rem",
+//     fontSize: "1rem",
+//     color: "#6b7280",
+//   };
+
+//   const buttonContainerStyle = {
+//     marginTop: "1.5rem",
+//     display: "flex",
+//     gap: "1rem",
+//   };
+
+//   const buttonStyle = {
+//     padding: "0.75rem 1.5rem",
+//     fontSize: "1rem",
+//     fontWeight: "600",
+//     border: "none",
+//     cursor: "pointer",
+//     borderRadius: "0.375rem",
+//   };
+
+//   const primaryButtonStyle = {
+//     ...buttonStyle,
+//     backgroundColor: "#003366",
+//     color: "white",
+//   };
+
+//   const secondaryButtonStyle = {
+//     ...buttonStyle,
+//     backgroundColor: "transparent",
+//     border: "2px solid #003366",
+//     color: "#003366",
+//   };
+
+//   const imageContainerStyle = {
+//     position: "absolute",
+//     insetY: "0",
+//     right: "0",
+//     width: "50%",
+//     height: "100%",
+//   };
+
+//   const imageStyle = {
+//     width: "100%",
+//     height: "100%",
+//     objectFit: "cover",
+//   };
+
+//   return (
+//     <div style={containerStyle}>
+//       <div style={contentStyle}>
+//         <main>
+//           <div style={{ textAlign: "left" }}>
+//             <h1 style={headingStyle}>
+//               <span>Welcome to</span>{" "}
+//               <span style={highlightStyle}>Express Bank</span>
+//             </h1>
+//             <p style={paragraphStyle}>
+//               Experience seamless online banking with Express Bank. Manage your
+//               finances, make transactions, and grow your wealth all in one
+//               place.
+//             </p>
+//             <div style={buttonContainerStyle}>
+//               <button style={primaryButtonStyle}>Get Started</button>
+//               <button style={secondaryButtonStyle}>Learn More</button>
+//             </div>
+//           </div>
+//         </main>
+//       </div>
+//       <div style={imageContainerStyle}>
+//         <img
+//           style={imageStyle}
+//           src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
+//           alt="Online banking"
+//         />
+//       </div>
+//     </div>
+//   );
+// }
+
+
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
-  const containerStyle = {
-    position: "relative",
-    backgroundColor: "white",
-    overflow: "hidden",
-    marginTop: "11%"
-  };
-
-  const contentStyle = {
-    maxWidth: "1024px",
-    margin: "0 auto",
-    position: "relative",
-    zIndex: 10,
-    paddingBottom: "2rem",
-  };
-
-  const headingStyle = {
-    fontSize: "3rem",
-    fontWeight: "800",
-    color: "#1f2937",
-    lineHeight: "1.2",
-  };
-
-  const highlightStyle = {
-    color: "#003366",
-  };
-
-  const paragraphStyle = {
-    marginTop: "1rem",
-    fontSize: "1rem",
-    color: "#6b7280",
-  };
-
-  const buttonContainerStyle = {
-    marginTop: "1.5rem",
-    display: "flex",
-    gap: "1rem",
-  };
-
-  const buttonStyle = {
-    padding: "0.75rem 1.5rem",
-    fontSize: "1rem",
-    fontWeight: "600",
-    border: "none",
-    cursor: "pointer",
-    borderRadius: "0.375rem",
-  };
-
-  const primaryButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: "#003366",
-    color: "white",
-  };
-
-  const secondaryButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: "transparent",
-    border: "2px solid #003366",
-    color: "#003366",
-  };
-
-  const imageContainerStyle = {
-    position: "absolute",
-    insetY: "0",
-    right: "0",
-    width: "50%",
-    height: "100%",
-  };
-
-  const imageStyle = {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={contentStyle}>
-        <main>
-          <div style={{ textAlign: "left" }}>
-            <h1 style={headingStyle}>
-              <span>Welcome to</span>{" "}
-              <span style={highlightStyle}>Express Bank</span>
+    <section className="relative pt-16 overflow-hidden"
+    style={{  backgroundColor: "white"}}>
+      <div className="container mx-auto px-4">
+        <div className="pt-20 pb-16 sm:pt-24 sm:pb-20">
+          <div className="max-w-2xl">
+            <h1 className="text-4xl font-bold tracking-tight text-[#002B54] sm:text-6xl">
+              Welcome to Express Bank
             </h1>
-            <p style={paragraphStyle}>
-              Experience seamless online banking with Express Bank. Manage your
-              finances, make transactions, and grow your wealth all in one
-              place.
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              Experience seamless online banking with Express Bank. Manage your finances, make transactions, and grow your wealth all in one place.
             </p>
-            <div style={buttonContainerStyle}>
-              <button style={primaryButtonStyle}>Get Started</button>
-              <button style={secondaryButtonStyle}>Learn More</button>
+            <div className="mt-8 flex gap-4">
+              <Link
+                to="/register"
+                className="rounded-md bg-[#003366] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#002347] transition-colors"
+              >
+                Get Started
+              </Link>
+              <Link
+                to="#features"
+                className="rounded-md border-2 border-[#003366] px-6 py-3 text-sm font-semibold text-[#003366] hover:bg-gray-50 transition-colors"
+              >
+                Learn More
+              </Link>
             </div>
           </div>
-        </main>
+        </div>
       </div>
-      <div style={imageContainerStyle}>
-        <img
-          style={imageStyle}
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-          alt="Online banking"
-        />
-      </div>
-    </div>
+    </section>
   );
 }
+

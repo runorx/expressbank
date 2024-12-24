@@ -168,55 +168,170 @@
 
 
 
+// import React, { useState, useEffect } from "react";
+// import { Link } from "react-router-dom";
+// import { GiHamburgerMenu } from "react-icons/gi";
+// import { IoLogIn } from "react-icons/io5";
+// import { Logo } from "../../../shared/Logo";
+
+// export default function Navbar() {
+//   const [navbar, setNavbar] = useState(false); // Scroll background change state
+
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       setNavbar(window.scrollY > 100);
+//     };
+//     window.addEventListener("scroll", handleScroll);
+
+//     return () => {
+//       window.removeEventListener("scroll", handleScroll);
+//     };
+//   }, []);
+
+//   return (
+//     <div
+//       className={`fixed top-0 w-full z-50 transition-all duration-300 ease-in-out ${
+//         navbar ? "bg-navyblue text-white shadow-lg" : "bg-white text-black"
+//       }`}
+//     >
+//       <nav className="max-w-[1800px] mx-auto px-4 sm:px-10 md:px-12 py-2 flex justify-between items-center">
+//         {/* Logo */}
+//         <div className="max-w-[200px]">
+//           <Logo bg={false} textSize="text-lg md:text-2xl lg:text-3xl" />
+//         </div>
+
+//         {/* Buttons (visible on all screen sizes) */}
+//         <div className="flex gap-4">
+//           <Link
+//             to="/register"
+//             className="inline-flex font-bold text-xs sm:text-sm bg-teal-800 text-white hover:bg-white px-2 sm:px-3 py-2 hover:text-blue-800 border-2 hover:border-blue-800 items-center rounded-lg shadow transition-all duration-300"
+//           >
+//             Register
+//           </Link>
+//           <Link
+//             to="/login"
+//             className="flex gap-1 justify-center items-center font-bold text-xs sm:text-sm bg-blue-800 text-white hover:bg-white px-2 sm:px-3 py-2 hover:text-blue-800 border-2 hover:border-blue-800 rounded-lg shadow transition-all duration-300"
+//           >
+//             <IoLogIn size={20} />
+//             Login
+//           </Link>
+//         </div>
+//       </nav>
+//     </div>
+//   );
+// }
+
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoLogIn } from "react-icons/io5";
-import { Logo } from "../../../shared/Logo";
 
 export default function Navbar() {
-  const [navbar, setNavbar] = useState(false); // Scroll background change state
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setNavbar(window.scrollY > 100);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navItems = [
+    { name: "Home", href: "/" },
+    { name: "Features", href: "#features" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
+  ];
+
   return (
-    <div
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ease-in-out ${
-        navbar ? "bg-navyblue text-white shadow-lg" : "bg-white text-black"
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
-      <nav className="max-w-[1800px] mx-auto px-4 sm:px-10 md:px-12 py-2 flex justify-between items-center">
-        {/* Logo */}
-        <div className="max-w-[200px]">
-          <Logo bg={false} textSize="text-lg md:text-2xl lg:text-3xl" />
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <span className="text-2xl font-bold text-[#003366]">Express Bank</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-sm font-medium text-gray-700 hover:text-[#003366] transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link
+              to="/register"
+              className="px-4 py-2 bg-[#006B4D] text-white rounded hover:bg-[#005A41] transition-colors"
+            >
+              Register
+            </Link>
+            <Link
+              to="/login"
+              className="px-4 py-2 bg-[#003366] text-white rounded hover:bg-[#002347] transition-colors flex items-center"
+            >
+              <IoLogIn className="mr-2" />
+              Login
+            </Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <GiHamburgerMenu className="h-6 w-6" />
+          </button>
         </div>
 
-        {/* Buttons (visible on all screen sizes) */}
-        <div className="flex gap-4">
-          <Link
-            to="/register"
-            className="inline-flex font-bold text-xs sm:text-sm bg-teal-800 text-white hover:bg-white px-2 sm:px-3 py-2 hover:text-blue-800 border-2 hover:border-blue-800 items-center rounded-lg shadow transition-all duration-300"
-          >
-            Register
-          </Link>
-          <Link
-            to="/login"
-            className="flex gap-1 justify-center items-center font-bold text-xs sm:text-sm bg-blue-800 text-white hover:bg-white px-2 sm:px-3 py-2 hover:text-blue-800 border-2 hover:border-blue-800 rounded-lg shadow transition-all duration-300"
-          >
-            <IoLogIn size={20} />
-            Login
-          </Link>
-        </div>
-      </nav>
-    </div>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden">
+            <nav className="flex flex-col gap-4 py-4">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block px-2 py-1 text-lg text-gray-700 hover:text-[#003366]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Link
+                to="/register"
+                className="block px-2 py-1 text-lg text-white bg-[#006B4D] rounded hover:bg-[#005A41]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Register
+              </Link>
+              <Link
+                to="/login"
+                className="block px-2 py-1 text-lg text-white bg-[#003366] rounded hover:bg-[#002347] flex items-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <IoLogIn className="mr-2" />
+                Login
+              </Link>
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
   );
 }
+
