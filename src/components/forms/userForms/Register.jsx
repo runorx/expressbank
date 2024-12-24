@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FcCurrencyExchange } from "react-icons/fc";
 import { TiUserAdd } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { register } from "../../../state/features/User/Auth/authSlice";
 import FormButton from "../../shared/FormButton";
 import { Logo } from "../../shared/Logo";
@@ -294,13 +294,17 @@ export default function Register() {
 
       }}>
 
-        Already a user? <a href="/login"
+        Already a user? 
         
-        style={{
-          color: "#000080",
-          fontWeight: "400",
-          padding: "0px 5px"
-        }}>Login </a> 
+
+
+        <Link
+            to="/login"
+            className="mx-2 text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
+          >
+            Login
+          </Link>
+
       </div>
 
     </div>

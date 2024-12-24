@@ -226,6 +226,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoLogIn } from "react-icons/io5";
+import { Logo } from "../../../shared/Logo";
+
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -256,7 +258,10 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-[#003366]">Express Bank</span>
+        
+         <Logo bg={false} textSize="text-lg md:text-2xl lg:text-3xl" />
+        
+
           </Link>
 
           {/* Desktop Navigation */}
@@ -301,7 +306,10 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <nav className="flex flex-col gap-4 py-4">
+            <nav className="flex flex-col gap-4 py-4" 
+            style={{
+              backgroundColor: "white"
+            }}>
               {navItems.map((item) => (
                 <Link
                   key={item.name}
