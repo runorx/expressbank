@@ -4,4 +4,8 @@ import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
   plugins: [svgr(), react()],
+  optimizeDeps: {
+    include: ["react/jsx-runtime"],
+  },
+  
 });
