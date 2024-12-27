@@ -445,10 +445,6 @@ import FormButton from "../../shared/FormButton";
 import { Logo } from "../../shared/Logo";
 import MessagesContainer from "../../shared/MessagesContainer";
 
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://express-dfcc.onrender.com/api/users"
-    : "http://localhost:5000/api/users";
 
 
 const OTPInput = ({ value, onChange }) => {
@@ -543,7 +539,7 @@ export default function Login() {
 
   const handleSendOTP = useCallback(async () => {
     try {
-      const response = await fetch(`${API_URL}/send-otp`, {
+      const response = await fetch('https://express-dfcc.onrender.com/api/users/send-otp', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
