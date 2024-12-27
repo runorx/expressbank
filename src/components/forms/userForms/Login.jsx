@@ -444,6 +444,7 @@ import { login } from "../../../state/features/User/Auth/authSlice";
 import FormButton from "../../shared/FormButton";
 import { Logo } from "../../shared/Logo";
 import MessagesContainer from "../../shared/MessagesContainer";
+import { USERS_API } from "../../../state/features/api";
 
 
 
@@ -539,7 +540,7 @@ export default function Login() {
 
   const handleSendOTP = useCallback(async () => {
     try {
-      const response = await fetch('https://express-dfcc.onrender.com/api/users/send-otp', {
+      const response = await fetch(`${USERS_API}send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
