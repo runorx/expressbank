@@ -19,7 +19,12 @@ export const UserLoginPage = () => {
   });
 
   return (
-    <div className="max-h-screen max-w-7xl w-full mx-auto flex justify-center items-center flex-col lg:flex-row gap-4 p-4 md:p-10">
+    <div className="max-h-screen"
+    style={{
+      width: "100%",
+      maxWidth: "500px", /* Ensures the container doesn't exceed 500px */
+      margin: "auto",
+    }}>
       <Login />
 
       {/* <div className="w-[70%] self-stretch hidden lg:flex justify-center items-center flex-col p-6 bg-slate-50/60 rounded-lg shadow">

@@ -121,22 +121,33 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4"
+    <div className="min-h-screen flex items-center justify-center"
     style={{
       width: "100%",
       maxWidth: "500px", /* Ensures the container doesn't exceed 500px */
       margin: "auto",
     }}
     >
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        {!showVerification ? (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <h1 className="text-2xl font-bold text-center">Welcome Back!</h1>
+ <div 
+  className="
+    w-full /* Full width by default */
+    md:max-w-800px /* Restrict width to 800px for larger screens */
+    mx-auto /* Center horizontally */
+    px-3 /* Add padding for content inside */
+  "
+  
+><h1 className="text-2xl font-bold text-center">Welcome Back!</h1>
             <p className="text-sm text-gray-500 text-center mb-6">
               Sign in and take control of your finances
             </p>
+        {!showVerification ? (
+          <form onSubmit={handleSubmit} className="space-y-4 bg-gray-100  shadow-lg"
+          style={{
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", /* Soft shadow */
+          }}>
             
-            <div className="space-y-2">
+            
+            <div className="space-y-2  " >
               <label className="text-sm block">Phone / E-mail</label>
               <input
                 type="email"
