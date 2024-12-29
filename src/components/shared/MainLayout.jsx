@@ -33,7 +33,7 @@ export const MainLayout = () => {
       <div className="w-full h-full min-h-screen flex flex-col justify-center items-center">
         {/* Navigation Buttons */}
         <Buttons title={title} />
-        <div className="w-full h-full min-h-screen flex justify-center items-center p-3 md:p-6 bg-slate-50">
+        <div className="w-full h-full min-h-screen flex justify-center items-center p-3 md:p-6 bg-white-50">
           <Outlet />
         </div>
       </div>

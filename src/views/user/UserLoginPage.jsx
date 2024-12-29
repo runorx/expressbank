@@ -19,15 +19,15 @@ export const UserLoginPage = () => {
   });
 
   return (
-    <div className="min-h-screen max-w-7xl w-full mx-auto flex justify-center items-center flex-col lg:flex-row gap-4 p-4 md:p-10">
+    <div className="max-h-screen max-w-7xl w-full mx-auto flex justify-center items-center flex-col lg:flex-row gap-4 p-4 md:p-10">
       <Login />
 
-      <div className="w-[70%] self-stretch hidden lg:flex justify-center items-center flex-col p-6 bg-slate-50/60 rounded-lg shadow">
+      {/* <div className="w-[70%] self-stretch hidden lg:flex justify-center items-center flex-col p-6 bg-slate-50/60 rounded-lg shadow">
         <h2 className="w-full p-6 text-center text-3xl !font-sans font-bold text-teal-600 italic bg-white border-y-4 border-blue-800 rounded shadow">
           Express Bank is Everything You Need Now!
         </h2>
         <LoginImg className="max-w-md self-stretch h-full mx-auto" />
-      </div>
+      </div> */}
     </div>
   );
 };

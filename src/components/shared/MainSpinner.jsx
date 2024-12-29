@@ -12,9 +12,11 @@ export const MainSpinner = ({
     >
       <BeatLoader
         className="m-auto"
-        color={"rgb(30, 79, 217)"}
         loading={isLoading}
         size={spinnerSize}
+        style={{
+          backgroundColor: "white"
+        }}
       />
     </div>
   );

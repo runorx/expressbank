@@ -8,7 +8,7 @@ const override = css`
 
 function SmallSpinner({ isLoading }) {
   return (
-    <BeatLoader color={"#ffffff"} loading={isLoading} css={override} size={8} />
+    <BeatLoader color={"navy"} loading={isLoading} css={override} size={8} />
   );
 }
 

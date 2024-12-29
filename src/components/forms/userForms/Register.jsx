@@ -1,312 +1,330 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { FcCurrencyExchange } from "react-icons/fc";
-import { TiUserAdd } from "react-icons/ti";
-import { useDispatch, useSelector } from "react-redux";
-import {Link, useNavigate } from "react-router-dom";
-import { register } from "../../../state/features/User/Auth/authSlice";
-import FormButton from "../../shared/FormButton";
-import { Logo } from "../../shared/Logo";
-import MessagesContainer from "../../shared/MessagesContainer";
-import { InputsValidator } from "../helpers/InputsValidator";
+
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { TextField, Button, Card, CardContent, CardHeader, Typography, CircularProgress, InputAdornment, IconButton } from '@mui/material';
+import { FaDollarSign, FaUserPlus, FaEnvelope, FaLock, FaPhone, FaMapMarkerAlt, FaBuilding, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { register } from '../../../state/features/User/Auth/authSlice';
 
 export default function Register() {
-  const [formInputs, setFormInputs] = useState({
-    firstName: "",
-    lastName: "",
-    password: "",
-    repeatPassword: "",
-    email: "",
-    phone: "",
-    address: "",
-    postCode: "",
-    msg: "",
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    address: '',
+    phone: '',
+    postCode: '',
   });
-
-  const {
-    postCode,
-    email,
-    password,
-    phone,
-    address,
-    lastName,
-    firstName,
-    repeatPassword,
-    msg,
-  } = formInputs;
-
-  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.userAuth);
 
-  const { user, isError, isSuccess, isLoading, message } = useSelector(
-    (state) => state.userAuth
-  );
-
-  useEffect(() => {
-    if (isError) {
-      setFormInputs({ ...formInputs, msg: message });
+  const validateFirstStep = () => {
+    const stepErrors = {};
+    if (!formData.firstName) stepErrors.firstName = 'First name is required';
+    if (!formData.lastName) stepErrors.lastName = 'Last name is required';
+    if (!formData.email) stepErrors.email = 'Email is required';
+    if (!formData.password) stepErrors.password = 'Password is required';
+    if (formData.password !== formData.confirmPassword) {
+      stepErrors.confirmPassword = "Passwords don't match";
     }
+    return stepErrors;
+  };
 
-    if (user || isSuccess) {
-      setFormInputs({
-        ...formInputs,
-        msg: "Registered Succesfully",
-      });
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+  const validateSecondStep = () => {
+    const stepErrors = {};
+    if (!formData.address) stepErrors.address = 'Address is required';
+    if (!formData.phone) stepErrors.phone = 'Phone is required';
+    if (!formData.postCode) stepErrors.postCode = 'Postal code is required';
+    return stepErrors;
+  };
+
+  const handleContinue = (e) => {
+    e.preventDefault();
+    const stepErrors = validateFirstStep();
+    if (Object.keys(stepErrors).length === 0) {
+      localStorage.setItem('registrationData', JSON.stringify(formData));
+      setStep(2);
+    } else {
+      setErrors(stepErrors);
     }
-  }, [user, isError, isSuccess, message]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //set error msg to none first
-    setFormInputs({ ...formInputs, msg: "" });
-    //check for password match > then show error msg
-    if (password !== repeatPassword) {
-      setFormInputs({ ...formInputs, msg: "password does not match" });
-      return;
+    const stepErrors = validateSecondStep();
+    if (Object.keys(stepErrors).length === 0) {
+      const userData = {
+        name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
+        email: formData.email.trim(),
+        password: formData.password,
+        phone: formData.phone.trim(),
+        addresse: formData.address.trim(),
+        postal: formData.postCode.trim(),
+      };
+      dispatch(register(userData));
+    } else {
+      setErrors(stepErrors);
     }
+  };
 
-    const userData = {
-      name: `${firstName.trim()} ${lastName.trim()}`,
-      email: email.trim(),
-      phone: phone.trim(),
-      postal: postCode.trim(),
-      addresse: address.trim(),
-      password,
-    };
+  React.useEffect(() => {
+    if (isSuccess) {
+      localStorage.removeItem('registrationData');
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
+    }
+  }, [isSuccess, navigate]);
 
-    dispatch(register(userData));
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
-    <div className="block p-6 rounded shadow-lg shadow-black/20 bg-slate-50 w-full mx-auto">
-      <Logo />
-      <h3 className="flex justify-center items-center text-2xl text-blue-800 font-bold text-center p-2 my-4 rounded shadow bg-blue-200 border-x-4 border-blue-800 select-none">
-        <FcCurrencyExchange className="mr-1" size={45} />
-        <span>Register</span>
-      </h3>
-
-      <form className="mt-10" onSubmit={handleSubmit}>
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="first_name"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            First name
-          </label>
-          <input
-            type="text"
-            name="first_name"
-            defaultValue={firstName}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, firstName: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Type Your First Name"
-            required
-          />
-        </div>
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="last_name"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            Last name
-          </label>
-
-          <input
-            type="text"
-            name="last_name"
-            defaultValue={lastName}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, lastName: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Type Your Last Name"
-            required
-          />
-        </div>
-
-        {/* name validator */}
-        <InputsValidator nameInput={`${firstName} ${lastName}`} />
-
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="email"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            Email address
-          </label>
-
-          <input
-            type="email"
-            name="email"
-            defaultValue={email}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, email: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Type Your Email Address"
-            required
-          />
-        </div>
-
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="address"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            Full Address
-          </label>
-
-          <input
-            type="text"
-            name="address"
-            defaultValue={address}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, address: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Type Your Home Address"
-            required
-          />
-        </div>
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="password"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            Password
-          </label>
-
-          <input
-            type="password"
-            name="password"
-            defaultValue={password}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, password: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Type A Strong Password"
-            required
-          />
-        </div>
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="repeat_password"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            Confirm password
-          </label>
-
-          <input
-            type="password"
-            name="repeat_password"
-            defaultValue={repeatPassword}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, repeatPassword: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Repeat Password"
-            required
-          />
-        </div>
-
-        {/* password validator */}
-        <InputsValidator passwordInput={password} />
-
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="phone"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            Phone Number Ex:-(+234 008878980)
-          </label>
-
-          <input
-            type="tel"
-            name="phone"
-            defaultValue={phone}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, phone: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Type Your Mobile Number"
-            required
-          />
-        </div>
-
-        <div className="relative z-0 w-full mb-6">
-          <label
-            htmlFor="postal"
-            className="w-full inline-block font-semibold mb-4 p-2 text-gray-800 border-b-4 border-blue-800 rounded shadow bg-blue-200"
-          >
-            Postal Code Ex:-(12345)
-          </label>
-
-          <input
-            type="text"
-            name="postal"
-            defaultValue={postCode}
-            onChange={(e) =>
-              setFormInputs({ ...formInputs, postCode: e.target.value })
-            }
-            className="block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Type Your Postal Code"
-            required
-          />
-        </div>
-
-        {/*Request Status and Errors*/}
-        {(isError || isSuccess) && (
-          <MessagesContainer
-            msg={msg}
-            isSuccess={isSuccess}
-            isError={isError}
-          />
-        )}
-
-
-        {/*form button */}
-
-        <FormButton
-          text={{ loading: "Processing", default: "Register" }}
-          isLoading={isLoading}
-          icon={<TiUserAdd className="mb-[-2px] ml-1" size={27} />}
+    <Card sx={{ maxWidth: 500, mx: 'auto', mt: 4 }}>
+      <CardHeader
+        title={
+          <Typography variant="h5" align="center"
           style={{
-            backgroundColor: "#000080",
-            color: "white",
-          }}
-         
-        />
+            color: "navy"
+          }}>
+            {/* <FaDollarSign size={24} style={{ marginRight: 8, verticalAlign: 'middle' }} /> */}
+            Create Account!
+          </Typography>
+        }
+        subheader={<Typography variant="subtitle1" align="center">Join  <span style={{
+          color: "navy"
+        }}>Express Bank </span>and manage your finances with ease.</Typography>}
+      />
+      <CardContent>
+        <form onSubmit={step === 1 ? handleContinue : handleSubmit}>
+          {step === 1 ? (
+            <>
+              <TextField
+                label="First Name"
+                fullWidth
+                margin="normal"
+                value={formData.firstName}
+                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                error={!!errors.firstName}
+                helperText={errors.firstName}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaUserPlus 
+                      style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                label="Last Name"
+                fullWidth
+                margin="normal"
+                value={formData.lastName}
+                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                error={!!errors.lastName}
+                helperText={errors.lastName}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaUserPlus 
+                      style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                label="Email"
+                type="email"
+                fullWidth
+                margin="normal"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                error={!!errors.email}
+                helperText={errors.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaEnvelope 
+                      style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                fullWidth
+                margin="normal"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                error={!!errors.password}
+                helperText={errors.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaLock 
+                      style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility}>
+                        {showPassword ? <FaEyeSlash  style={{
+                        color: "navy"
+                      }}/> : <FaEye  style={{
+                        color: "navy"
+                      }}/>}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                label="Confirm Password"
+                type={showConfirmPassword ? "text" : "password"}
+                fullWidth
+                margin="normal"
+                value={formData.confirmPassword}
+                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                error={!!errors.confirmPassword}
+                helperText={errors.confirmPassword}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaLock  style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={toggleConfirmPasswordVisibility}>
+                        {showConfirmPassword ? <FaEyeSlash style={{
+                        color: "navy"
+                      }} /> : <FaEye  style={{
+                        color: "navy"
+                      }}/>}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <TextField
+                label="Full Address"
+                fullWidth
+                margin="normal"
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                error={!!errors.address}
+                helperText={errors.address}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaBuilding  style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                label="Phone Number"
+                type="tel"
+                fullWidth
+                margin="normal"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                error={!!errors.phone}
+                helperText={errors.phone}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaPhone  style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                label="Postal Code"
+                fullWidth
+                margin="normal"
+                value={formData.postCode}
+                onChange={(e) => setFormData({ ...formData, postCode: e.target.value })}
+                error={!!errors.postCode}
+                helperText={errors.postCode}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaMapMarkerAlt  style={{
+                        color: "navy"
+                      }}/>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </>
+          )}
 
-      </form>
+          {(isError || isSuccess) && (
+            <Typography color={isError ? "error" : "success"} sx={{ mt: 2 }}>
+              {message}
+            </Typography>
+          )}
 
-      <div
-      style={{
-        textAlign: "center",
-        padding: "10px",
-        fontSize: "16px"
-
-      }}>
-
-        Already a user? 
-        
-
-
-        <Link
-            to="/login"
-            className="mx-2 text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{ mt: 3 }}
+            disabled={isLoading}
+            style={{
+              backgroundColor: "navy"
+            }}
           >
-            Login
-          </Link>
+            {isLoading ? <CircularProgress size={24} /> : (
+              <>
+                {step === 1 ? 'Continue' : 'Create Account'}
+                <FaUserPlus style={{ marginLeft: 8 }} />
+              </>
+            )}
+          </Button>
 
-      </div>
-
-    </div>
+          <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+            Already have an account?{' '}
+            <Link to="/login" style={{ color: '#1976d2', textDecoration: 'none' }}>
+              Sign in
+            </Link>
+          </Typography>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
+
