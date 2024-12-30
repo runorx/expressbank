@@ -157,7 +157,7 @@ export default function Login() {
             className="space-y-4 lg:bg-gray-100  bg-white-100 lg:shadow-lg shadow-none "
             style={{
               marginBottom: '10px',
-              padding: '10px 0px',
+              padding: '20px 0px',
             }}
           >
             <div className="space-y-2 flex flex-col items-center">
@@ -281,6 +281,8 @@ export default function Login() {
                 Apple
               </button>
             </div>
+
+
           </form>
         ) : (
           <div className="space-y-4 mx-auto">
