@@ -1,9 +1,28 @@
-
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { TextField, Button, Card, CardContent, CardHeader, Typography, CircularProgress, InputAdornment, IconButton } from '@mui/material';
-import { FaDollarSign, FaUserPlus, FaEnvelope, FaLock, FaPhone, FaMapMarkerAlt, FaBuilding, FaEye, FaEyeSlash } from 'react-icons/fa';
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  CircularProgress,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
+import {
+  FaDollarSign,
+  FaUserPlus,
+  FaEnvelope,
+  FaLock,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaBuilding,
+  FaEye,
+  FaEyeSlash,
+} from 'react-icons/fa';
 import { register } from '../../../state/features/User/Auth/authSlice';
 
 export default function Register() {
@@ -24,7 +43,9 @@ export default function Register() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.userAuth);
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.userAuth
+  );
 
   const validateFirstStep = () => {
     const stepErrors = {};
@@ -93,23 +114,59 @@ export default function Register() {
   };
 
   return (
-    <Card sx={{ maxWidth: 500, mx: 'auto', mt: 4 }}>
+    <Card sx={{ maxWidth: 500, mx: 'auto', mt: 4,  width:{xs: '100%', lg: '70%'}}}>
       <CardHeader
         title={
-          <Typography variant="h5" align="center"
-          style={{
-            color: "navy"
-          }}>
-            {/* <FaDollarSign size={24} style={{ marginRight: 8, verticalAlign: 'middle' }} /> */}
+          <Typography
+            variant="h4"
+            align="center"
+            style={{
+              color: '#002147',
+              fontWeight: '600',
+            }}
+          >
             Create Account!
           </Typography>
         }
-        subheader={<Typography variant="subtitle1" align="center">Join  <span style={{
-          color: "navy"
-        }}>Express Bank </span>and manage your finances with ease.</Typography>}
+        subheader={
+          <Typography variant="subtitle1" align="center"> 
+             <span
+              style={{
+                color: '#002147',
+                padding: "0px 2px",
+                fontSize: "12px"
+              }}
+            >
+              Join
+            </span>
+            <span
+              style={{
+                color: '#002147',
+                fontSize: "12px"
+              }}
+            >
+              Express Bank{' '}
+            </span>
+            <span
+              style={{
+      
+                fontSize: "12px"
+              }}
+            >
+             and manage your finances with ease.
+            </span>
+            
+          </Typography>
+        }
       />
+
       <CardContent>
-        <form onSubmit={step === 1 ? handleContinue : handleSubmit}>
+        <form
+          onSubmit={step === 1 ? handleContinue : handleSubmit}
+          style={{
+            margin: 'auto',
+          }}
+        >
           {step === 1 ? (
             <>
               <TextField
@@ -117,37 +174,72 @@ export default function Register() {
                 fullWidth
                 margin="normal"
                 value={formData.firstName}
-                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
                 error={!!errors.firstName}
                 helperText={errors.firstName}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaUserPlus 
-                      style={{
-                        color: "navy"
-                      }}/>
+                      <FaUserPlus
+                        style={{
+                          color: '#002147',
+                        }}
+                      />
                     </InputAdornment>
                   ),
+
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%",
+                   
+                  },
+                }}
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
+
               <TextField
                 label="Last Name"
                 fullWidth
                 margin="normal"
                 value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
                 error={!!errors.lastName}
                 helperText={errors.lastName}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaUserPlus 
-                      style={{
-                        color: "navy"
-                      }}/>
+                      <FaUserPlus
+                        style={{
+                          color: '#002147',
+                        }}
+                      />
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
+                }}
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                 
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
               <TextField
@@ -156,79 +248,152 @@ export default function Register() {
                 fullWidth
                 margin="normal"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 error={!!errors.email}
                 helperText={errors.email}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaEnvelope 
-                      style={{
-                        color: "navy"
-                      }}/>
+                      <FaEnvelope
+                        style={{
+                          color: '#002147',
+                        }}
+                      />
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
+                }}
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
               <TextField
                 label="Password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 fullWidth
                 margin="normal"
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 error={!!errors.password}
                 helperText={errors.password}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaLock 
-                      style={{
-                        color: "navy"
-                      }}/>
+                      <FaLock
+                        style={{
+                          color: '#002147',
+                        }}
+                        
+                      />
+
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={togglePasswordVisibility}>
-                        {showPassword ? <FaEyeSlash  style={{
-                        color: "navy"
-                      }}/> : <FaEye  style={{
-                        color: "navy"
-                      }}/>}
+                        {showPassword ? (
+                          <FaEyeSlash
+                            style={{
+                              color: '#002147',
+                            }}
+                          />
+                        ) : (
+                          <FaEye
+                            style={{
+                              color: '#002147',
+                            }}
+                          />
+                        )}
                       </IconButton>
+
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
+                }}
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
               <TextField
                 label="Confirm Password"
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 fullWidth
                 margin="normal"
                 value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaLock  style={{
-                        color: "navy"
-                      }}/>
+                      <FaLock
+                        style={{
+                          color: '#002147',
+                        }}
+                      />
                     </InputAdornment>
                   ),
+                  
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={toggleConfirmPasswordVisibility}>
-                        {showConfirmPassword ? <FaEyeSlash style={{
-                        color: "navy"
-                      }} /> : <FaEye  style={{
-                        color: "navy"
-                      }}/>}
+                        {showConfirmPassword ? (
+                          <FaEyeSlash
+                            style={{
+                              color: '#002147',
+                            }}
+                          />
+                        ) : (
+                          <FaEye
+                            style={{
+                              color: '#002147',
+                            }}
+                          />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
+                }}
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
             </>
@@ -239,17 +404,34 @@ export default function Register() {
                 fullWidth
                 margin="normal"
                 value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
                 error={!!errors.address}
                 helperText={errors.address}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaBuilding  style={{
-                        color: "navy"
-                      }}/>
+                      <FaBuilding
+                        style={{
+                          color: '#002147',
+                        }}
+                      />
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
+                }}
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
               <TextField
@@ -258,17 +440,36 @@ export default function Register() {
                 fullWidth
                 margin="normal"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
                 error={!!errors.phone}
                 helperText={errors.phone}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaPhone  style={{
-                        color: "navy"
-                      }}/>
+                      <FaPhone
+                        style={{
+                          color: '#002147',
+                        }}
+                      />
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
+                  
+                }}
+
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
               <TextField
@@ -276,24 +477,41 @@ export default function Register() {
                 fullWidth
                 margin="normal"
                 value={formData.postCode}
-                onChange={(e) => setFormData({ ...formData, postCode: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, postCode: e.target.value })
+                }
                 error={!!errors.postCode}
                 helperText={errors.postCode}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaMapMarkerAlt  style={{
-                        color: "navy"
-                      }}/>
+                      <FaMapMarkerAlt
+                        style={{
+                          color: '#002147',
+                        }}
+                      />
                     </InputAdornment>
                   ),
+                  style: {
+                    height: '45px',
+                    marginBottom: "5%"
+                  },
+                }}
+                sx={{
+                  width: {
+                    xs: '100%', // 90% on mobile
+                    lg: '90%', // 80% on large screens
+                
+                  },
+                  display: 'block', // Makes the TextField behave like a block element
+                  margin: 'auto', // This centers the TextField horizontally
                 }}
               />
             </>
           )}
 
           {(isError || isSuccess) && (
-            <Typography color={isError ? "error" : "success"} sx={{ mt: 2 }}>
+            <Typography color={isError ? 'error' : 'success'} sx={{ mt: 2 }}>
               {message}
             </Typography>
           )}
@@ -302,23 +520,32 @@ export default function Register() {
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ mt: 3 }}
+            sx={{ mt: 3, width: {xs: '100%', lg: '90%'}, display: 'block', // Makes the TextField behave like a block element
+            margin: 'auto', // This centers the TextField horizontally
+         }}
             disabled={isLoading}
             style={{
-              backgroundColor: "navy"
+              backgroundColor: '#002147',
+              fontWeight: "600"
+
             }}
           >
-            {isLoading ? <CircularProgress size={24} /> : (
+            {isLoading ? (
+              <CircularProgress size={24} />
+            ) : (
               <>
                 {step === 1 ? 'Continue' : 'Create Account'}
-                <FaUserPlus style={{ marginLeft: 8 }} />
+                {/* <FaUserPlus style={{ marginLeft: 8 }} /> */}
               </>
             )}
           </Button>
 
           <Typography variant="body2" align="center" sx={{ mt: 2 }}>
             Already have an account?{' '}
-            <Link to="/login" style={{ color: '#1976d2', textDecoration: 'none' }}>
+            <Link
+              to="/login"
+              style={{ color: '#1976d2', textDecoration: 'none' }}
+            >
               Sign in
             </Link>
           </Typography>
@@ -327,4 +554,3 @@ export default function Register() {
     </Card>
   );
 }
-

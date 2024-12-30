@@ -21,7 +21,7 @@ export const MainLayout = () => {
   UseResetStatus(() => {
     return () => {
       dispatch(resetUserStatus());
-      document.title = "E-Bank | Everything You Need";
+      document.title = "Express Bank | Everything You Need";
     };
   });
 

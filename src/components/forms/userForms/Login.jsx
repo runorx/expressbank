@@ -1,25 +1,24 @@
-
-
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../../state/features/User/Auth/authSlice";
-import { USERS_API } from "../../../state/features/api";
-
-
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../../state/features/User/Auth/authSlice';
+import { USERS_API } from '../../../state/features/api';
 
 export default function Login() {
   const [formInputs, setFormInputs] = useState({
-    email: "",
-    password: "",
-    msg: "",
+    email: '',
+    password: '',
+    msg: '',
     showVerification: false,
-    otp: ["", "", "", "", "", ""],
+    otp: ['', '', '', '', '', ''],
     resendTimer: 60,
   });
 
-  const { email, password, msg, showVerification, otp, resendTimer } = formInputs;
-  const inputRefs = Array(6).fill().map(() => useRef(null));
+  const { email, password, msg, showVerification, otp, resendTimer } =
+    formInputs;
+  const inputRefs = Array(6)
+    .fill()
+    .map(() => useRef(null));
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,7 +28,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate('/');
     }
   }, [user, navigate]);
 
@@ -51,36 +50,33 @@ export default function Login() {
       if (!email) {
         setFormInputs((prev) => ({
           ...prev,
-          msg: "Please enter a valid email to send OTP.",
+          msg: 'Please enter a valid email to send OTP.',
         }));
         return;
       }
 
-      const response = await fetch(
-        `${USERS_API}send-otp`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        }
-      );
+      const response = await fetch(`${USERS_API}send-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
       const data = await response.json();
       if (response.ok) {
         setFormInputs((prev) => ({
           ...prev,
-          msg: "OTP sent successfully to your email.",
+          msg: 'OTP sent successfully to your email.',
           showVerification: true,
           resendTimer: 60,
         }));
       } else {
-        throw new Error(data.message || "Error sending OTP.");
+        throw new Error(data.message || 'Error sending OTP.');
       }
     } catch (error) {
-      console.error("Error sending OTP:", error);
+      console.error('Error sending OTP:', error);
       setFormInputs((prev) => ({
         ...prev,
-        msg: error.message || "Failed to send OTP. Please try again.",
+        msg: error.message || 'Failed to send OTP. Please try again.',
       }));
     }
   };
@@ -88,15 +84,15 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      setFormInputs((prev) => ({ ...prev, msg: "Please fill in all fields." }));
+      setFormInputs((prev) => ({ ...prev, msg: 'Please fill in all fields.' }));
       return;
     }
 
     try {
       await handleSendOTP();
     } catch (error) {
-      console.error("Error in handleSubmit:", error);
-      setFormInputs((prev) => ({ ...prev, msg: "Failed to process request." }));
+      console.error('Error in handleSubmit:', error);
+      setFormInputs((prev) => ({ ...prev, msg: 'Failed to process request.' }));
     }
   };
 
@@ -113,7 +109,7 @@ export default function Login() {
   };
 
   const handleVerifySubmit = () => {
-    const otpValue = otp.join("");
+    const otpValue = otp.join('');
     if (otpValue.length === 6) {
       const userData = { email: email.trim(), password, otp: otpValue };
       dispatch(login(userData));
@@ -121,66 +117,137 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center"
-    style={{
-      width: "100%",
-      maxWidth: "500px", /* Ensures the container doesn't exceed 500px */
-      margin: "auto",
-    }}
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{
+        width: '100%',
+        maxWidth: '500px' /* Ensures the container doesn't exceed 500px */,
+        margin: 'auto',
+      }}
     >
- <div 
-  className="
+      <div
+        className="
     w-full /* Full width by default */
     md:max-w-800px /* Restrict width to 800px for larger screens */
     mx-auto /* Center horizontally */
     px-3 /* Add padding for content inside */
   "
-  
-><h1 className="text-2xl font-bold text-center">Welcome Back!</h1>
-            <p className="text-sm text-gray-500 text-center mb-6">
-              Sign in and take control of your finances
-            </p>
+      >
+        <h1 className="text-3xl font-bold text-center">Welcome Back!</h1>
+        <p className="text-sm text-gray-500 text-center mb-6">
+          Sign in and take control of your finances
+        </p>
         {!showVerification ? (
-          <form onSubmit={handleSubmit} className="space-y-4 bg-gray-100  shadow-lg"
-          style={{
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", /* Soft shadow */
-          }}>
-            
-            
-            <div className="space-y-2  " >
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 lg:bg-gray-100  bg-white-100 shadow-lg "
+            style={{
+              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' /* Soft shadow */,
+              marginBottom: '10px',
+              padding: '10px 0px',
+            }}
+          >
+            {/* <div className="space-y-2  " 
+            style={{
+              margin: "center",
+              justifyContent: "center",
+              justifyItems: "center"
+            }}>
               <label className="text-sm block">Phone / E-mail</label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setFormInputs((prev) => ({ ...prev, email: e.target.value }))}
-                className="w-full px-3 py-2 border rounded"
+                className="w-full px-2 py-2 border rounded 
+                "
+                style={{margin: "auto",
+                  justifyContent: "center",
+                  border: "0.05px solid navy"
+                }}
+              />
+            </div> */}
+            <div className="space-y-2 flex flex-col items-center">
+              <label className="text-sm block self-start w-[90%] lg:w-[80%] pl-[3%] lg:pl-[10%]">
+                Phone / E-mail
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) =>
+                  setFormInputs((prev) => ({ ...prev, email: e.target.value }))
+                }
+                className="px-2 py-2 border rounded border-navy w-[95%] lg:w-[80%]"
+                style={{
+                  border: '0.05px solid navy',
+                }}
               />
             </div>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <label className="text-sm block">Password</label>
               <input
                 type="password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setFormInputs((prev) => ({ ...prev, password: e.target.value }))}
+                onChange={(e) =>
+                  setFormInputs((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  }))
+                }
                 className="w-full px-3 py-2 border rounded"
+              />
+            </div> */}
+            <div className="space-y-2 flex flex-col items-center">
+              <label className="text-sm block self-start w-[90%] lg:w-[80%] pl-[3%] lg:pl-[10%]">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) =>
+                  setFormInputs((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  }))
+                }
+                className="px-2 py-2 border rounded border-navy w-[95%] lg:w-[80%]"
+                style={{
+                  border: '0.05px solid navy',
+                }}
               />
             </div>
 
-            <div className="text-right">
-              <Link to="/reset-password" className="text-blue-600 hover:underline text-sm">
+            <div className="text-right w-full lg:w-[90%] w-[96%]">
+              <Link
+                to="/reset-password"
+                className="text-blue-600 hover:underline text-sm"
+              >
                 Forgot Password? Reset Now!
               </Link>
             </div>
 
-            <button
+            {/* <button
               type="submit"
-              className="w-full bg-[#002147] text-white py-2 rounded"
+              className=" bg-[#002147] text-white py-2 rounded w-[95%] lg:w-[80%] "
+
             >
-              {isLoading ? "Processing..." : "Continue"}
-            </button>
+              {isLoading ? 'Processing...' : 'Continue'}
+            </button> */}
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-[#002147] text-white py-2 rounded w-[95%] lg:w-[80%] "
+                style={{
+                  fontWeight: '600',
+                }}
+              >
+                {isLoading ? 'Processing...' : 'Continue'}
+              </button>
+            </div>
 
             {msg && <p className="text-red-500 text-sm text-center">{msg}</p>}
 
@@ -200,14 +267,54 @@ export default function Login() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <button type="button" className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-50">
-                <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4 mr-2" />
+            {/* <div className="grid grid-cols-2 gap-4 flex justify-center  ">
+              <button
+                type="button"
+                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40"
+              >
+                <img
+                  src="https://www.google.com/favicon.ico"
+                  alt="Google"
+                  className="w-4 h-4 mr-2"
+                />
                 Google
               </button>
-              <button type="button" className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-50">
+              <button
+                type="button"
+                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40"
+              >
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/>
+                  <path
+                    fill="currentColor"
+                    d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"
+                  />
+                </svg>
+                Apple
+              </button>
+            </div>
+             */}
+
+            <div className="grid grid-cols-2 gap-4 justify-center items-center w-full">
+              <button
+                type="button"
+                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40 w-[70%] mx-auto"
+              >
+                <img
+                  src="https://www.google.com/favicon.ico"
+                  alt="Google"
+                  className="w-4 h-4 mr-2"
+                />
+                Google
+              </button>
+              <button
+                type="button"
+                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40 w-[70%] mx-auto"
+              >
+                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"
+                  />
                 </svg>
                 Apple
               </button>
@@ -225,11 +332,11 @@ export default function Login() {
             <p className="text-sm text-gray-500 text-center">
               Please verify your Email Address
             </p>
-            
+
             <label className="text-sm block text-center">
               Enter your verification Code (6 digits)
             </label>
-            
+
             <div className="flex justify-center space-x-2">
               {otp.map((digit, index) => (
                 <input
@@ -246,8 +353,10 @@ export default function Login() {
             </div>
 
             <div className="text-center text-sm">
-              <button 
-                className={`text-blue-600 hover:underline ${resendTimer > 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              <button
+                className={`text-blue-600 hover:underline ${
+                  resendTimer > 0 ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
                 disabled={resendTimer > 0}
                 onClick={handleSendOTP}
               >
@@ -257,9 +366,9 @@ export default function Login() {
 
             <button
               onClick={handleVerifySubmit}
-              className="w-full bg-[#002147] text-white py-2 rounded"
+              className="w-full bg-[#002147] text-white py-2 rounded lg:w-[80%] w-[95%]"
             >
-              Continue
+              Signin
             </button>
           </div>
         )}
@@ -267,4 +376,3 @@ export default function Login() {
     </div>
   );
 }
-

@@ -6,7 +6,7 @@ export default function FormButton({
   icon,
   text,
   isLoading = false,
-  bgColor = ["bg-navy-600", "bg-navy-700", "bg-navy-800"],
+  bgColor = ["bg-blue-600", "bg-blue-700", "bg-blue-800"],
 }) {
   return (
     <button
