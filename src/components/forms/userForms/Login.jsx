@@ -133,42 +133,35 @@ export default function Login() {
     px-3 /* Add padding for content inside */
   "
       >
-        <h1 className="text-3xl font-bold text-center">Welcome Back!</h1>
-        <p className="text-sm text-gray-500 text-center mb-6">
-          Sign in and take control of your finances
-        </p>
+       
+        {!showVerification ? (
+          <>
+            <h1 className="text-3xl font-bold text-center">Welcome Back!</h1>
+            <p className="text-sm text-gray-500 text-center mb-6">
+              Sign in and take control of your finances
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="text-3xl font-bold text-center">
+              Verify Your Email
+            </h1>
+            <p className="text-sm text-gray-500 text-center mb-6">
+              Please verify your Email Address
+            </p>
+          </>
+        )}
         {!showVerification ? (
           <form
             onSubmit={handleSubmit}
-            className="space-y-4 lg:bg-gray-100  bg-white-100 shadow-lg "
+            className="space-y-4 lg:bg-gray-100  bg-white-100 lg:shadow-lg shadow-none "
             style={{
-              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' /* Soft shadow */,
               marginBottom: '10px',
               padding: '10px 0px',
             }}
           >
-            {/* <div className="space-y-2  " 
-            style={{
-              margin: "center",
-              justifyContent: "center",
-              justifyItems: "center"
-            }}>
-              <label className="text-sm block">Phone / E-mail</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setFormInputs((prev) => ({ ...prev, email: e.target.value }))}
-                className="w-full px-2 py-2 border rounded 
-                "
-                style={{margin: "auto",
-                  justifyContent: "center",
-                  border: "0.05px solid navy"
-                }}
-              />
-            </div> */}
             <div className="space-y-2 flex flex-col items-center">
-              <label className="text-sm block self-start w-[90%] lg:w-[80%] pl-[3%] lg:pl-[10%]">
+              <label className="text-sm block self-start w-[90%] lg:w-[80%] pl-[3%] lg:pl-[10%] lg:text-[12px] lg:text-black text-[navy] text-[12px]">
                 Phone / E-mail
               </label>
               <input
@@ -185,23 +178,8 @@ export default function Login() {
               />
             </div>
 
-            {/* <div className="space-y-2">
-              <label className="text-sm block">Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) =>
-                  setFormInputs((prev) => ({
-                    ...prev,
-                    password: e.target.value,
-                  }))
-                }
-                className="w-full px-3 py-2 border rounded"
-              />
-            </div> */}
             <div className="space-y-2 flex flex-col items-center">
-              <label className="text-sm block self-start w-[90%] lg:w-[80%] pl-[3%] lg:pl-[10%]">
+              <label className="text-sm block self-start w-[90%] lg:w-[80%] pl-[3%] lg:pl-[10%] lg:text-[12px] lg:text-black text-[navy] text-[12px]">
                 Password
               </label>
               <input
@@ -221,22 +199,6 @@ export default function Login() {
               />
             </div>
 
-            <div className="text-right w-full lg:w-[90%] w-[96%]">
-              <Link
-                to="/reset-password"
-                className="text-blue-600 hover:underline text-sm"
-              >
-                Forgot Password? Reset Now!
-              </Link>
-            </div>
-
-            {/* <button
-              type="submit"
-              className=" bg-[#002147] text-white py-2 rounded w-[95%] lg:w-[80%] "
-
-            >
-              {isLoading ? 'Processing...' : 'Continue'}
-            </button> */}
             <div className="flex justify-center">
               <button
                 type="submit"
@@ -251,53 +213,50 @@ export default function Login() {
 
             {msg && <p className="text-red-500 text-sm text-center">{msg}</p>}
 
-            <div className="text-sm text-center">
+            <div className="text-left lg:w-[80%] w-[94%] mx-auto">
+              <Link
+                to="/reset-password"
+                className="text-blue-600 hover:underline text-sm"
+              >
+                Forgot Password? Reset Now!
+              </Link>
+            </div>
+
+            <div className="text-left lg:w-[80%] w-[94%] mx-auto">
               Don't have an account?{' '}
               <Link to="/register" className="text-blue-600 hover:underline">
                 Join Express Bank
               </Link>
             </div>
 
-            <div className="relative my-6">
+            <p className="text-xs text-center text-gray-500 mt-4">
+              Your information is securely encrypted.
+            </p>
+
+            <div className="relative lg:w-[80%] w-[94%] mx-auto">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">or</span>
+                <span
+                  className="bg-white"
+                  style={{
+                    color: 'lightgrey',
+                    textTransform: 'lowercase',
+                  }}
+                >
+                  or
+                </span>
               </div>
             </div>
-
-            {/* <div className="grid grid-cols-2 gap-4 flex justify-center  ">
-              <button
-                type="button"
-                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40"
-              >
-                <img
-                  src="https://www.google.com/favicon.ico"
-                  alt="Google"
-                  className="w-4 h-4 mr-2"
-                />
-                Google
-              </button>
-              <button
-                type="button"
-                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40"
-              >
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"
-                  />
-                </svg>
-                Apple
-              </button>
-            </div>
-             */}
 
             <div className="grid grid-cols-2 gap-4 justify-center items-center w-full">
               <button
                 type="button"
-                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40 w-[70%] mx-auto"
+                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-white-40 w-[88%] lg:w-[60%] mx-auto"
+                style={{
+                  border: '0.05px solid navy',
+                }}
               >
                 <img
                   src="https://www.google.com/favicon.ico"
@@ -306,38 +265,32 @@ export default function Login() {
                 />
                 Google
               </button>
+
               <button
                 type="button"
-                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-gray-40 w-[70%] mx-auto"
+                className="flex items-center justify-center px-4 py-2 border rounded hover:bg-white-40 w-[88%] lg:w-[60%] mx-auto"
+                style={{
+                  border: '0.05px solid navy',
+                }}
               >
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"
-                  />
-                </svg>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+                  alt="Apple"
+                  className="w-4 h-4 mr-2"
+                />
                 Apple
               </button>
             </div>
-
-            <p className="text-xs text-center text-gray-500 mt-4">
-              Your information is securely encrypted.
-            </p>
           </form>
         ) : (
-          <div className="space-y-4">
-            <h1 className="text-2xl font-bold text-center">
-              Verify Your Email
-            </h1>
-            <p className="text-sm text-gray-500 text-center">
-              Please verify your Email Address
-            </p>
+          <div className="space-y-4 mx-auto">
+            
 
             <label className="text-sm block text-center">
               Enter your verification Code (6 digits)
             </label>
 
-            <div className="flex justify-center space-x-2">
+            <div className="flex justify-center space-x-2 lg:w-[80%] w-[94%] mx-auto">
               {otp.map((digit, index) => (
                 <input
                   key={index}
@@ -347,7 +300,7 @@ export default function Login() {
                   maxLength="1"
                   value={digit}
                   onChange={(e) => handleOTPChange(index, e.target.value)}
-                  className="w-12 h-12 text-center text-lg border rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  className="w-12  h-12 text-center text-lg border rounded focus:border-navy-500 focus:ring-1 focus:ring-navy-500"
                 />
               ))}
             </div>
@@ -364,12 +317,20 @@ export default function Login() {
               </button>
             </div>
 
-            <button
+            {/* <button
               onClick={handleVerifySubmit}
-              className="w-full bg-[#002147] text-white py-2 rounded lg:w-[80%] w-[95%]"
+              className="bg-[#002147] text-white py-2 rounded lg:w-[80%] w-[95%] mx-auto"
             >
               Signin
-            </button>
+            </button> */}
+            <div className="flex justify-center">
+              <button
+                onClick={handleVerifySubmit}
+                className="bg-[#002147] text-white py-2 rounded lg:w-[76%] w-[80%] text-bold"
+              >
+                Signin
+              </button>
+            </div>
           </div>
         )}
       </div>

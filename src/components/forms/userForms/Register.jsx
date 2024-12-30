@@ -114,53 +114,55 @@ export default function Register() {
   };
 
   return (
-    <Card sx={{ maxWidth: 500, mx: 'auto', mt: 4,  width:{xs: '100%', lg: '70%'}}}>
-      <CardHeader
-        title={
-          <Typography
-            variant="h4"
-            align="center"
-            style={{
-              color: '#002147',
-              fontWeight: '600',
-            }}
-          >
-            Create Account!
-          </Typography>
-        }
-        subheader={
-          <Typography variant="subtitle1" align="center"> 
-             <span
-              style={{
-                color: '#002147',
-                padding: "0px 2px",
-                fontSize: "12px"
-              }}
-            >
-              Join
-            </span>
-            <span
-              style={{
-                color: '#002147',
-                fontSize: "12px"
-              }}
-            >
-              Express Bank{' '}
-            </span>
-            <span
-              style={{
-      
-                fontSize: "12px"
-              }}
-            >
-             and manage your finances with ease.
-            </span>
-            
-          </Typography>
-        }
-      />
+    <div
+    style={{
+      width: '100vw', // Full viewport width
+      height: '100%', // Full height of the content (or adjust to '100vh' for full screen height)
+      margin: '0', // Remove any default margin
+      padding: '0', // Remove any default padding
+      justifyContent: 'center', // Center content horizontally
+      alignItems: 'center', // Center content vertically
+     
+    }}
+    >
+<h1
+      style={{
+        color: '#002147',
+        fontWeight: '600',
+        fontSize: '26px', // Matches h4 variant style
+        textAlign: 'center',
+      }}
+    >
+      Create Account!
+    </h1>
 
+    <p
+      style={{
+        color: '#002147',
+        fontSize: '0.875rem', // Matches subtitle1 variant style
+        textAlign: 'center',
+        lineHeight: '1.5', // Ensures good readability
+      }}
+    >
+      <span style={{ padding: '0px 2px' }}>Join</span>
+      <span> Express Bank </span>
+      <span>and manage your finances with ease.</span>
+    </p>
+    <Card
+      sx={{
+        maxWidth: 500,
+        mx: 'auto',
+        mt: 4,
+        width: { xs: '100%', lg: '70%' },
+      }}
+    >
+    
+    <CardHeader
+  title={null} // Removes the title text
+  subheader={null} // Removes the subheader text
+/>
       <CardContent>
+      
         <form
           onSubmit={step === 1 ? handleContinue : handleSubmit}
           style={{
@@ -192,15 +194,13 @@ export default function Register() {
 
                   style: {
                     height: '45px',
-                    marginBottom: "5%",
-                   
+                    marginBottom: '5%',
                   },
                 }}
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -229,14 +229,13 @@ export default function Register() {
                   ),
                   style: {
                     height: '45px',
-                    marginBottom: "5%"
+                    marginBottom: '5%',
                   },
                 }}
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                 
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -265,14 +264,13 @@ export default function Register() {
                   ),
                   style: {
                     height: '45px',
-                    marginBottom: "5%"
+                    marginBottom: '5%',
                   },
                 }}
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -296,15 +294,10 @@ export default function Register() {
                         style={{
                           color: '#002147',
                         }}
-                        
                       />
-
                     </InputAdornment>
                   ),
-                  style: {
-                    height: '45px',
-                    marginBottom: "5%"
-                  },
+                  
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={togglePasswordVisibility}>
@@ -322,19 +315,17 @@ export default function Register() {
                           />
                         )}
                       </IconButton>
-
                     </InputAdornment>
                   ),
                   style: {
                     height: '45px',
-                    marginBottom: "5%"
+                    marginBottom: '5%',
                   },
                 }}
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -361,7 +352,7 @@ export default function Register() {
                       />
                     </InputAdornment>
                   ),
-                  
+
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={toggleConfirmPasswordVisibility}>
@@ -383,14 +374,13 @@ export default function Register() {
                   ),
                   style: {
                     height: '45px',
-                    marginBottom: "5%"
+                    marginBottom: '5%',
                   },
                 }}
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -421,14 +411,13 @@ export default function Register() {
                   ),
                   style: {
                     height: '45px',
-                    marginBottom: "5%"
+                    marginBottom: '5%',
                   },
                 }}
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -457,16 +446,13 @@ export default function Register() {
                   ),
                   style: {
                     height: '45px',
-                    marginBottom: "5%"
+                    marginBottom: '5%',
                   },
-                  
                 }}
-
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -494,14 +480,13 @@ export default function Register() {
                   ),
                   style: {
                     height: '45px',
-                    marginBottom: "5%"
+                    marginBottom: '5%',
                   },
                 }}
                 sx={{
                   width: {
                     xs: '100%', // 90% on mobile
                     lg: '90%', // 80% on large screens
-                
                   },
                   display: 'block', // Makes the TextField behave like a block element
                   margin: 'auto', // This centers the TextField horizontally
@@ -520,21 +505,34 @@ export default function Register() {
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ mt: 3, width: {xs: '100%', lg: '90%'}, display: 'block', // Makes the TextField behave like a block element
-            margin: 'auto', // This centers the TextField horizontally
-         }}
+            sx={{
+              mt: 3,
+              width: { xs: '100%', lg: '90%' },
+              display: 'block', // Makes the TextField behave like a block element
+              margin: 'auto', // This centers the TextField horizontally
+            }}
             disabled={isLoading}
             style={{
               backgroundColor: '#002147',
-              fontWeight: "600"
-
+              fontWeight: '600',
+              textTransform: 'none',
             }}
           >
             {isLoading ? (
               <CircularProgress size={24} />
             ) : (
               <>
-                {step === 1 ? 'Continue' : 'Create Account'}
+                {/* {step === 1 ? 'Continue' : 'Create Account'} */}
+                {step === 1
+                  ? `${'Continue'.charAt(0).toUpperCase()}${'Continue'
+                      .slice(1)
+                      .toLowerCase()}`
+                  : `${'Create Account'
+                      .charAt(0)
+                      .toUpperCase()}${'Create Account'
+                      .slice(1)
+                      .toLowerCase()}`}
+
                 {/* <FaUserPlus style={{ marginLeft: 8 }} /> */}
               </>
             )}
@@ -544,7 +542,11 @@ export default function Register() {
             Already have an account?{' '}
             <Link
               to="/login"
-              style={{ color: '#1976d2', textDecoration: 'none' }}
+              style={{
+                color: '#1976d2',
+                textDecoration: 'none',
+                textTransform: 'lowercase',
+              }}
             >
               Sign in
             </Link>
@@ -552,5 +554,6 @@ export default function Register() {
         </form>
       </CardContent>
     </Card>
+    </div>
   );
 }
